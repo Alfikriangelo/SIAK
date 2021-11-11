@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {SafeAreaView, Text, View} from 'react-native';
+import {SafeAreaView, Text, TouchableOpacity, View} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createStackNavigator} from '@react-navigation/stack';
@@ -28,7 +28,10 @@ function DataMaster() {
     <Stack.Navigator initialRouteName="Data Master">
       <Stack.Screen
         name="Home"
-        options={{title: 'Sistem Informasi Akademik'}}
+        options={{
+          title: 'Sistem Informasi Akademik',
+          headerTitleStyle: {alignSelf: 'center', fontSize: 20},
+        }}
         component={Home}
       />
       <Stack.Screen
@@ -36,6 +39,17 @@ function DataMaster() {
         component={GetProdi}
         options={({navigation}) => ({
           title: 'Data Prodi',
+          headerLeft: () => (
+            <Ionicons
+              name={'chevron-back-outline'}
+              size={40}
+              color="#5665D2"
+              onPress={() => navigation.goBack()}
+              style={{marginLeft: 10}}
+            />
+          ),
+
+          headerTitleStyle: {alignSelf: 'center', fontSize: 20},
           headerRight: () => (
             <Ionicons
               name={'ios-add-circle'}
@@ -47,17 +61,44 @@ function DataMaster() {
           ),
         })}
       />
-      <Stack.Screen name="Post Prodi" component={PostProdi} />
+      <Stack.Screen
+        name="Post Prodi"
+        component={PostProdi}
+        options={({navigation}) => ({
+          headerLeft: () => (
+            <Ionicons
+              name={'chevron-back-outline'}
+              size={40}
+              color="#5665D2"
+              onPress={() => navigation.goBack()}
+              style={{marginLeft: 10}}
+            />
+          ),
+        })}
+      />
       <Stack.Screen
         name="Detail Prodi"
         component={DetailProdi}
-        options={{title: 'Rincian'}}
+        options={({navigation}) => ({
+          title: 'Rincian',
+          headerTitleStyle: {fontSize: 20},
+          headerLeft: () => (
+            <Ionicons
+              name={'chevron-back-outline'}
+              size={40}
+              color="#5665D2"
+              onPress={() => navigation.goBack()}
+              style={{marginLeft: 10}}
+            />
+          ),
+        })}
       />
       <Stack.Screen
         name="Get Matkul"
         component={GetMatkul}
         options={({navigation}) => ({
           title: 'Data Matkul',
+          headerTitleStyle: {alignSelf: 'center', fontSize: 20},
           headerRight: () => (
             <Ionicons
               name={'ios-add-circle'}
@@ -67,16 +108,48 @@ function DataMaster() {
               style={{marginRight: 15}}
             />
           ),
+          headerLeft: () => (
+            <Ionicons
+              name={'chevron-back-outline'}
+              size={40}
+              color="#5665D2"
+              onPress={() => navigation.goBack()}
+              style={{marginLeft: 10}}
+            />
+          ),
         })}
       />
       <Stack.Screen
         name="Post Matkul"
         component={PostMatkul}
-        options={{title: 'Tambah'}}
+        options={({navigation}) => ({
+          title: 'Tambah',
+          headerLeft: () => (
+            <Ionicons
+              name={'chevron-back-outline'}
+              size={40}
+              onPress={() => navigation.goBack()}
+              color="#5665D2"
+              style={{marginLeft: 10}}
+            />
+          ),
+        })}
       />
       <Stack.Screen
         name="Detail Matkul"
-        options={{title: 'Rincian'}}
+        options={({navigation}) => ({
+          title: 'Rincian',
+          headerTitleStyle: {fontSize: 20},
+          headerLeft: () => (
+            <Ionicons
+              name={'chevron-back-outline'}
+              size={40}
+              color="#5665D2"
+              onPress={() => navigation.goBack()}
+              style={{marginLeft: 10}}
+            />
+          ),
+        })}
         component={DetailMatkul}
       />
       <Stack.Screen
@@ -93,16 +166,47 @@ function DataMaster() {
               style={{marginRight: 15}}
             />
           ),
+          headerLeft: () => (
+            <Ionicons
+              name={'chevron-back-outline'}
+              size={40}
+              color="#5665D2"
+              onPress={() => navigation.goBack()}
+              style={{marginLeft: 10}}
+            />
+          ),
         })}
       />
       <Stack.Screen
         name="Post Kelas"
         component={PostKelas}
-        options={{title: 'Tambah'}}
+        options={({navigation}) => ({
+          title: 'Tambah',
+          headerLeft: () => (
+            <Ionicons
+              name={'chevron-back-outline'}
+              size={40}
+              color="#5665D2"
+              onPress={() => navigation.goBack()}
+              style={{marginLeft: 10}}
+            />
+          ),
+        })}
       />
       <Stack.Screen
         name="Detail Kelas"
-        options={{title: 'Rincian'}}
+        options={({navigation}) => ({
+          title: 'Rincian',
+          headerLeft: () => (
+            <Ionicons
+              name={'chevron-back-outline'}
+              size={40}
+              color="#5665D2"
+              onPress={() => navigation.goBack()}
+              style={{marginLeft: 10}}
+            />
+          ),
+        })}
         component={DetailKelas}
       />
 
@@ -111,6 +215,7 @@ function DataMaster() {
         component={Get}
         options={({navigation}) => ({
           title: 'Data Ruangan',
+          headerTitleStyle: {alignSelf: 'center', fontSize: 20},
           headerRight: () => (
             <Ionicons
               name={'ios-add-circle'}
@@ -120,12 +225,47 @@ function DataMaster() {
               style={{marginRight: 15}}
             />
           ),
+          headerLeft: () => (
+            <Ionicons
+              name={'chevron-back-outline'}
+              size={40}
+              color="#5665D2"
+              onPress={() => navigation.goBack()}
+              style={{marginLeft: 10}}
+            />
+          ),
         })}
       />
-      <Stack.Screen name="Post" component={Post} options={{title: 'Tambah'}} />
+      <Stack.Screen
+        name="Post"
+        component={Post}
+        options={({navigation}) => ({
+          title: 'Tambah',
+          headerLeft: () => (
+            <Ionicons
+              name={'chevron-back-outline'}
+              size={40}
+              color="#5665D2"
+              onPress={() => navigation.goBack()}
+              style={{marginLeft: 10}}
+            />
+          ),
+        })}
+      />
       <Stack.Screen
         name="Details"
-        options={{title: 'Rincian'}}
+        options={({navigation}) => ({
+          title: 'Rincian',
+          headerLeft: () => (
+            <Ionicons
+              name={'chevron-back-outline'}
+              size={40}
+              color="#5665D2"
+              onPress={() => navigation.goBack()}
+              style={{marginLeft: 10}}
+            />
+          ),
+        })}
         component={Details}
       />
     </Stack.Navigator>
@@ -171,7 +311,10 @@ function DataMahasiswaScreen() {
     <Stack.Navigator>
       <Stack.Screen
         name="Home Kehadiran"
-        options={{title: 'Data Mahasiswa'}}
+        options={{
+          title: 'Data Mahasiswa',
+          headerTitleStyle: {alignSelf: 'center', fontSize: 20},
+        }}
         component={HomeKehadiran}
       />
     </Stack.Navigator>

@@ -1,10 +1,11 @@
 import React from 'react';
-import {View, Text, Image, StyleSheet} from 'react-native';
+import {View, Text, Image, StyleSheet, StatusBar} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 
 const Home = ({navigation}) => {
   return (
     <View style={{backgroundColor: 'white', flex: 1}}>
+      <StatusBar backgroundColor="white" barStyle="dark-content" />
       <View
         style={{
           flexDirection: 'column',

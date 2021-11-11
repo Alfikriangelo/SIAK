@@ -18,6 +18,7 @@ import GetProdi from './components/DataMaster/Prodi/GetProdi';
 import PostProdi from './components/DataMaster/Prodi/PostProdi';
 import DetailProdi from './components/DataMaster/Prodi/DetailProdi';
 import DetailKelas from './components/DataMaster/Kelas/DetailKelas';
+import HomeKehadiran from './components/Kehadiran/HomeKehadiran';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -167,12 +168,13 @@ function AbsensiScreen() {
 }
 function DataMahasiswaScreen() {
   return (
-    <SafeAreaView style={{flex: 1}}>
-      <CustomHeader title="DataMasiswa" />
-      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-        <Text>DataMahasiswa</Text>
-      </View>
-    </SafeAreaView>
+    <Stack.Navigator>
+      <Stack.Screen
+        name="Home Kehadiran"
+        options={{title: 'Data Mahasiswa'}}
+        component={HomeKehadiran}
+      />
+    </Stack.Navigator>
   );
 }
 

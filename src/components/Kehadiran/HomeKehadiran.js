@@ -1,3 +1,4 @@
+import {conforms} from 'lodash';
 import React, {useEffect, useState, useRef} from 'react';
 import {
   View,
@@ -6,15 +7,34 @@ import {
   Animated,
   TextInput,
   Text,
+  TouchableOpacity,
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-const HomeKehadiran = () => {
+const HomeKehadiran = ({navigation}) => {
+  const [kehadiran, setKehadiran] = useState([]);
+
   const scrollA = useRef(new Animated.Value(0)).current;
 
   const getKehadiranMahasiswa = () => {
-    const apiURL = 'https://project-fadhil-heroku.herokuapp.com/api/datamhs';
+    const apiURL = 'https://project-fadhil-heroku.herokuapp.com/api/mahasiswa';
+    fetch(apiURL)
+      .then(response => response.json())
+      .then(responseJson => {
+        setKehadiran(responseJson);
+      })
+      .catch(error => {
+        console.log(error);
+      });
   };
+
+  useEffect(() => {
+    const unSubscribe = navigation.addListener('focus', () => {
+      getKehadiranMahasiswa();
+    });
+    return unSubscribe;
+  }, [navigation]);
+
   return (
     <SafeAreaView style={styles.container}>
       <Animated.ScrollView
@@ -48,6 +68,66 @@ const HomeKehadiran = () => {
               onChangeText={text => searchFilter(text)}
               underlineColorAndroid="transparent"
             />
+          </View>
+          <View style={{marginVertical: 10}}>
+            {kehadiran.map((item, i) => (
+              <TouchableOpacity key={i} style={styles.list}>
+                <View>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      justifyContent: 'space-between',
+                    }}>
+                    <Text
+                      style={{
+                        fontFamily: 'SourceSansPro-Regular',
+                        color: '#f3f3f3',
+                        fontWeight: 'bold',
+                        fontSize: 20,
+                      }}>
+                      {item.nama}
+                    </Text>
+                    <View>
+                      <Text
+                        style={{
+                          fontFamily: 'SourceSansPro-Regular',
+                          color: '#f3f3f3',
+                          fontSize: 20,
+                        }}>
+                        {item.nim}
+                      </Text>
+                    </View>
+                  </View>
+
+                  <Text
+                    style={{
+                      fontFamily: 'SourceSansPro-Regular',
+                      color: '#f3f3f3',
+                      fontSize: 20,
+                    }}>
+                    {item.id_kelas.kelas}
+                  </Text>
+
+                  <Text
+                    style={{
+                      color: '#f3f3f3',
+                      fontSize: 20,
+                      fontFamily: 'SourceSansPro-Regular',
+                    }}>
+                    {item.id_programStudi.nama_prodi}
+                  </Text>
+
+                  <Text
+                    style={{
+                      color: '#f3f3f3',
+                      fontSize: 20,
+                      fontFamily: 'SourceSansPro-Regular',
+                    }}>
+                    {item.email}
+                  </Text>
+                </View>
+              </TouchableOpacity>
+            ))}
           </View>
         </View>
       </Animated.ScrollView>
@@ -98,6 +178,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#f3f3f3',
     color: '#424242',
     borderRadius: 10,
+  },
+  list: {
+    backgroundColor: '#31539A',
+    marginHorizontal: 10,
+    marginTop: 10,
+    padding: 25,
+    borderRadius: 20,
   },
 });
 

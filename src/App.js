@@ -19,6 +19,7 @@ import PostProdi from './components/DataMaster/Prodi/PostProdi';
 import DetailProdi from './components/DataMaster/Prodi/DetailProdi';
 import DetailKelas from './components/DataMaster/Kelas/DetailKelas';
 import HomeKehadiran from './components/Kehadiran/HomeKehadiran';
+import PostKehadiran from './components/Kehadiran/PostKehadiran';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -65,6 +66,7 @@ function DataMaster() {
         name="Post Prodi"
         component={PostProdi}
         options={({navigation}) => ({
+          title: 'Tambah',
           headerLeft: () => (
             <Ionicons
               name={'chevron-back-outline'}
@@ -311,11 +313,36 @@ function DataMahasiswaScreen() {
     <Stack.Navigator>
       <Stack.Screen
         name="Home Kehadiran"
-        options={{
+        options={({navigation}) => ({
           title: 'Data Mahasiswa',
-          headerTitleStyle: {alignSelf: 'center', fontSize: 20},
-        }}
+          headerTitleStyle: {marginLeft: 120, fontSize: 20},
+          headerRight: () => (
+            <Ionicons
+              name={'ios-add-circle'}
+              size={40}
+              color="#5665D2"
+              onPress={() => navigation.navigate('Post Kehadiran')}
+            />
+          ),
+        })}
         component={HomeKehadiran}
+      />
+      <Stack.Screen
+        name="Post Kehadiran"
+        options={({navigation}) => ({
+          title: 'Tambah',
+          headerTitleStyle: {fontSize: 20},
+          headerLeft: () => (
+            <Ionicons
+              name={'chevron-back-outline'}
+              size={40}
+              color="#5665D2"
+              style={{marginLeft: 15}}
+              onPress={() => navigation.goBack()}
+            />
+          ),
+        })}
+        component={PostKehadiran}
       />
     </Stack.Navigator>
   );

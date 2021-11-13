@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
   },
   input: {
     marginVertical: 10,
-    marginHorizontal: 15,
+    marginHorizontal: 10,
     borderRadius: 10,
     borderWidth: 1,
     padding: 10,
@@ -145,7 +145,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: 'black',
     fontSize: 20,
-    marginHorizontal: 15,
+    marginHorizontal: 10,
     marginTop: 10,
   },
 });

@@ -59,7 +59,7 @@ function PostProdi({navigation}) {
         style={{
           fontSize: 20,
           fontWeight: 'bold',
-          marginHorizontal: 15,
+          marginHorizontal: 10,
           color: 'black',
         }}>
         Prodi
@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
     padding: 10,
     borderColor: '#5665D2',
     fontSize: 15,
-    marginHorizontal: 15,
+    marginHorizontal: 10,
     color: 'black',
   },
 });

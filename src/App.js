@@ -315,12 +315,16 @@ function DataMahasiswaScreen() {
         name="Home Kehadiran"
         options={({navigation}) => ({
           title: 'Data Mahasiswa',
-          headerTitleStyle: {marginLeft: 120, fontSize: 20},
+          headerTitleAlign: 'center',
+          headerTitleStyle: {
+            fontSize: 20,
+          },
           headerRight: () => (
             <Ionicons
               name={'ios-add-circle'}
               size={40}
               color="#5665D2"
+              style={{marginRight: 15}}
               onPress={() => navigation.navigate('Post Kehadiran')}
             />
           ),
@@ -337,7 +341,7 @@ function DataMahasiswaScreen() {
               name={'chevron-back-outline'}
               size={40}
               color="#5665D2"
-              style={{marginLeft: 15}}
+              style={{marginLeft: 10}}
               onPress={() => navigation.goBack()}
             />
           ),

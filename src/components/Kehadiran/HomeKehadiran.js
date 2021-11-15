@@ -98,24 +98,28 @@ const HomeKehadiran = ({navigation}) => {
                       </Text>
                     </View>
                   </View>
-
-                  <Text
-                    style={{
-                      fontFamily: 'SourceSansPro-Regular',
-                      color: '#f3f3f3',
-                      fontSize: 20,
-                    }}>
-                    {item.id_kelas.kelas}
-                  </Text>
-
-                  <Text
-                    style={{
-                      color: '#f3f3f3',
-                      fontSize: 20,
-                      fontFamily: 'SourceSansPro-Regular',
-                    }}>
-                    {item.id_programStudi.nama_prodi}
-                  </Text>
+                  {item.id_kelas.map((v, i) => (
+                    <Text
+                      key={i}
+                      style={{
+                        color: '#f3f3f3',
+                        fontSize: 20,
+                        fontFamily: 'SourceSansPro-Regular',
+                      }}>
+                      {v.kelas}
+                    </Text>
+                  ))}
+                  {item.id_programStudi.map((v, i) => (
+                    <Text
+                      key={i}
+                      style={{
+                        color: '#f3f3f3',
+                        fontSize: 20,
+                        fontFamily: 'SourceSansPro-Regular',
+                      }}>
+                      {v.nama_prodi}
+                    </Text>
+                  ))}
 
                   <Text
                     style={{

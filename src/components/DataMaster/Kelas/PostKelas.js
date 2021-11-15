@@ -10,8 +10,6 @@ import {
 } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 
-import {ActivityIndicator} from 'react-native-paper';
-
 const PostKelas = ({navigation}) => {
   const [value, setValue] = useState([]);
   const [open, setOpen] = useState(false);
@@ -20,7 +18,6 @@ const PostKelas = ({navigation}) => {
 
   const [kelas, setKelas] = useState({
     kelas: '',
-    matkul: '',
   });
   const [loading, setLoading] = useState(false);
 
@@ -60,7 +57,7 @@ const PostKelas = ({navigation}) => {
   const saveData = () => {
     const matkul = data.filter(item => value.includes(item.matkul));
     console.log(matkul);
-
+    setLoading(true);
     var myHeaders = new Headers();
     myHeaders.append('Content-type', 'application/json');
     fetch('https://project-fadhil-heroku.herokuapp.com/api/kelas', {
@@ -77,6 +74,7 @@ const PostKelas = ({navigation}) => {
         if (!response.ok) {
           throw Error(displayAlert());
         }
+        console.log(response);
         navigation.goBack();
       })
       .then(result => console.log(result))
@@ -132,9 +130,6 @@ const PostKelas = ({navigation}) => {
           setValue={setValue}
           items={data.map(item => ({label: item.matkul, value: item.matkul}))}
           defaultValue={data}
-          // onChangeItem={item =>
-          //   setData({matkul: item.value}, console.log(matkul))
-          // }
         />
       </View>
       <TouchableOpacity onPress={saveData}>

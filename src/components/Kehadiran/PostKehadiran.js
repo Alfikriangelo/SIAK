@@ -7,8 +7,12 @@ import {
   TouchableOpacity,
   SafeAreaView,
   ScrollView,
+  ActivityIndicator,
+  Image,
 } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
+import ImagePicker from 'react-native-image-picker';
+import DataMahasiswa from '../../assets/DataMahasiswa.jpg';
 
 const PostKehadiran = ({navigation}) => {
   const [open, setOpen] = useState(false);
@@ -17,6 +21,32 @@ const PostKehadiran = ({navigation}) => {
   const [openKelas, setOpenKelas] = useState(false);
   const [valueKelas, setValueKelas] = useState(null);
   const [dataKelas, setDataKelas] = useState([]);
+  const [dataProvinsi, setDataProvinsi] = useState([]);
+  const [openProvinsi, setOpenProvinsi] = useState(false);
+  const [valueProvinsi, setValueProvinsi] = useState('');
+  const [dataKota, setDataKota] = useState([]);
+  const [openKota, setOpenKota] = useState(false);
+  const [valueKota, setValueKota] = useState('');
+  const [dataKecamatan, setDataKecamatan] = useState([]);
+  const [openKecamatan, setOpenKecamatan] = useState(false);
+  const [valueKecamatan, setValueKecamatan] = useState('');
+  const [dataKelurahan, setDataKelurahan] = useState([]);
+  const [loadingProvinsi, setLoadingProvinsi] = useState(false);
+  const [loadingKota, setLoadingKota] = useState(false);
+  const [loadingKecamatan, setLoadingKecamatan] = useState(false);
+  const [loadingProvinsiOrtu, setLoadingProvinsiOrtu] = useState(false);
+  const [loadingKotaOrtu, setLoadingKotaOrtu] = useState(false);
+  const [loadingKecamatanOrtu, setLoadingKecamatanOrtu] = useState(false);
+  const [dataProvinsiOrtu, setDataProvinsiOrtu] = useState([]);
+  const [openProvinsiOrtu, setOpenProvinsiOrtu] = useState(false);
+  const [valueProvinsiOrtu, setValueProvinsiOrtu] = useState('');
+  const [dataKotaOrtu, setDataKotaOrtu] = useState([]);
+  const [openKotaOrtu, setOpenKotaOrtu] = useState(false);
+  const [valueKotaOrtu, setValueKotaOrtu] = useState('');
+  const [dataKecamatanOrtu, setDataKecamatanOrtu] = useState([]);
+  const [openKecamatanOrtu, setOpenKecamatanOrtu] = useState(false);
+  const [valueKecamatanOrtu, setValueKecamatanOrtu] = useState('');
+  const [dataKelurahanOrtu, setDataKelurahanOrtu] = useState([]);
 
   const [kehadiran, setKehadiran] = useState({
     nim: '',
@@ -33,6 +63,128 @@ const PostKehadiran = ({navigation}) => {
 
   const [loading, setLoading] = useState(false);
 
+  const apiProvinsi = () => {
+    const apiURL = 'https://ibnux.github.io/data-indonesia/propinsi.json';
+
+    fetch(apiURL)
+      .then(res => res.text())
+      .then(resJson => {
+        setDataProvinsi(resJson);
+        // setDataProvinsiOrtu(resJson);
+      })
+      .catch(error => {
+        console.log('Error1 : ', error);
+      });
+  };
+  // const apiProvinsiOrtu = () => {
+  //   const apiURL = 'https://ibnux.github.io/data-indonesia/propinsi.json';
+
+  //   fetch(apiURL)
+  //     .then(res => res.json())
+  //     .then(resJson => {
+  //       setDataProvinsiOrtu(resJson);
+  //     })
+  //     .catch(error => {
+  //       console.log('Error 2: ', error);
+  //     });
+  // };
+
+  const handleChangeProvinsi = value => {
+    setLoadingProvinsi(true);
+    // setLoadingProvinsiOrtu(true);
+    const apiURL = `https://ibnux.github.io/data-indonesia/kabupaten/${value}.json`;
+    setValueProvinsi(value);
+    // setValueProvinsiOrtu(value);
+    // console.log(apiURL);
+    fetch(apiURL)
+      .then(res => res.text())
+      .then(resJson => {
+        setDataKota(resJson);
+        // setDataKotaOrtu(resJson);
+      })
+      .catch(error => {
+        console.log('Error3 : ', error);
+      });
+  };
+  // const handleChangeProvinsiOrtu = value => {
+  //   setLoadingProvinsiOrtu(true);
+  //   const apiURL = `https://ibnux.github.io/data-indonesia/kabupaten/${value}.json`;
+  //   setValueProvinsiOrtu(value);
+  //   // console.log(apiURL);
+  //   fetch(apiURL)
+  //     .then(res => res.text())
+  //     .then(resJson => {
+  //       setDataKotaOrtu(resJson);
+  //     })
+  //     .catch(error => {
+  //       console.log('Error4 : ', error);
+  //     });
+  // };
+
+  const handleChangeKota = value => {
+    setLoadingKota(true);
+    // setLoadingKotaOrtu(true);
+    const apiURL = `https://ibnux.github.io/data-indonesia/kecamatan/${value}.json`;
+    setValueKota(value);
+    // setValueKotaOrtu(value);
+    // console.log(apiURL);
+    fetch(apiURL)
+      .then(res => res.text())
+      .then(resJson => {
+        setDataKecamatan(resJson);
+        // setDataKecamatanOrtu(resJson);
+      })
+      .catch(error => {
+        console.log('Error5 : ', error);
+      });
+  };
+  // const handleChangeKotaOrtu = value => {
+  //   setLoadingKotaOrtu(true);
+  //   const apiURL = `https://ibnux.github.io/data-indonesia/kecamatan/${value}.json`;
+  //   setValueKotaOrtu(value);
+  //   // console.log(apiURL);
+  //   fetch(apiURL)
+  //     .then(res => res.text())
+  //     .then(resJson => {
+  //       setDataKecamatanOrtu(resJson);
+  //     })
+  //     .catch(error => {
+  //       console.log('Error6 : ', error);
+  //     });
+  // };
+
+  const handleChangeKecamatan = value => {
+    setLoadingKecamatan(true);
+    // setLoadingKecamatanOrtu(true);
+    const apiURL = `https://ibnux.github.io/data-indonesia/kelurahan/${value}.json`;
+    setValueKecamatan(value);
+    // setValueKecamatanOrtu(value);
+    // console.log(apiURL);
+    fetch(apiURL)
+      .then(res => res.text())
+      .then(resJson => {
+        setDataKelurahan(resJson);
+        // setDataKelurahanOrtu(resJson);
+      })
+      .catch(error => {
+        console.log('Error7 : ', error);
+      });
+  };
+  // const handleChangeKecamatanOrtu = value => {
+  //   setLoadingKecamatanOrtu(true);
+  //   const apiURL = `https://ibnux.github.io/data-indonesia/kelurahan/${value}.json`;
+  //   setValueKecamatanOrtu(value);
+  //   // console.log(apiURL);
+  //   fetch(apiURL)
+  //     .then(res => res.text())
+  //     .then(resJson => {
+  //       setDataKelurahanOrtu(resJson);
+  //     })
+  //     .catch(error => {
+  //       console.log('Error7 : ', error);
+  //     });
+  // };
+
   const getProgramStudi = () => {
     const apiURL = 'https://project-fadhil-heroku.herokuapp.com/api/prodi';
     fetch(apiURL)
@@ -41,7 +193,7 @@ const PostKehadiran = ({navigation}) => {
         setData(resJson);
       })
       .catch(error => {
-        console.log('Error : ', error);
+        console.log('Error8 : ', error);
       });
   };
 
@@ -51,16 +203,16 @@ const PostKehadiran = ({navigation}) => {
       .then(res => res.json())
       .then(resJson => {
         setDataKelas(resJson);
-        console.log(resJson);
       })
       .catch(error => {
-        console.log('Error : ', error);
+        console.log('Error9 : ', error);
       });
   };
 
   useEffect(() => {
     getProgramStudi();
     getKelas();
+    apiProvinsi();
   }, []);
 
   const onChangeNim = value => {
@@ -89,7 +241,16 @@ const PostKehadiran = ({navigation}) => {
     const dataKelass = dataKelas.filter(item =>
       valueKelas.includes(item.kelas),
     );
-    console.log(dataProgramStudi);
+    const dataProvinsii = dataProvinsi.filter(
+      item => valueProvinsi === item.id,
+    );
+    const dataKotaa = dataKota.filter(item => valueKota === item.id);
+    const dataKecamatann = dataKecamatan.filter(
+      item => valueKecamatan === item.id,
+    );
+
+    console.log(valueProvinsi);
+
     setLoading(true);
     var myHeaders = new Headers();
     myHeaders.append('Content-Type', 'application/json');
@@ -105,6 +266,9 @@ const PostKehadiran = ({navigation}) => {
         alamat: kehadiran.alamat,
         noTelepon: kehadiran.noTelepon,
         alamatOrtu: kehadiran.alamatOrtu,
+        provinsiMhs: dataProvinsii.length > 0 ? dataProvinsii[0].nama : '',
+        kabupatenMhs: dataKotaa.length > 0 ? dataKotaa[0].nama : '',
+        kecamatanMhs: dataKecamatann.length > 0 ? dataKecamatann[0].nama : '',
       }),
     })
       .then(response => {
@@ -149,67 +313,76 @@ const PostKehadiran = ({navigation}) => {
           onChangeText={value => onChangeNama(value)}
           style={styles.input}
         />
-        <View style={{marginHorizontal: 10}}>
-          <Text
-            style={{
-              fontSize: 20,
-              fontWeight: 'bold',
-              color: 'black',
-            }}>
-            Kelas
-          </Text>
-          <DropDownPicker
-            listMode={'SCROLLVIEW'}
-            style={styles.picker2}
-            open={openKelas}
-            value={valueKelas}
-            setOpen={setOpenKelas}
-            textStyle={{
-              fontSize: 15,
-              opacity: 0.4,
-            }}
-            dropDownContainerStyle={{
-              borderColor: '#5665D2',
-            }}
-            placeholder="3 SI A"
-            setValue={setValueKelas}
-            items={dataKelas.map(item => ({
-              label: item.kelas,
-              value: item.kelas,
-            }))}
-            defaultValue={dataKelas}
-          />
-        </View>
-        <View style={{marginHorizontal: 10}}>
-          <Text
-            style={{
-              fontSize: 20,
-              fontWeight: 'bold',
-              color: 'black',
-            }}>
-            Program Studi
-          </Text>
-          <DropDownPicker
-            listMode={'SCROLLVIEW'}
-            style={styles.picker}
-            open={open}
-            value={value}
-            setOpen={setOpen}
-            textStyle={{
-              fontSize: 15,
-              opacity: 0.4,
-            }}
-            dropDownContainerStyle={{
-              borderColor: '#5665D2',
-            }}
-            placeholder="Algoritma dan Pemrograman Dasar"
-            setValue={setValue}
-            items={data.map(item => ({
-              label: item.nama_prodi,
-              value: item.nama_prodi,
-            }))}
-            defaultValue={data}
-          />
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-evenly',
+          }}>
+          <View style={{width: '45%', marginRight: 10}}>
+            <Text
+              style={{
+                fontSize: 20,
+                fontWeight: 'bold',
+                color: 'black',
+              }}>
+              Kelas
+            </Text>
+
+            <DropDownPicker
+              listMode={'SCROLLVIEW'}
+              style={styles.picker2}
+              open={openKelas}
+              value={valueKelas}
+              setOpen={setOpenKelas}
+              textStyle={{
+                fontSize: 15,
+                opacity: 0.4,
+              }}
+              dropDownContainerStyle={{
+                borderColor: '#5665D2',
+              }}
+              // onChangeValue={value => console.log(value)}
+              placeholder="3 SI A"
+              setValue={setValueKelas}
+              items={dataKelas.map(item => ({
+                label: item.kelas,
+                value: item.kelas,
+              }))}
+              defaultValue={dataKelas}
+            />
+          </View>
+          <View style={{width: '45%'}}>
+            <Text
+              style={{
+                fontSize: 20,
+                fontWeight: 'bold',
+                color: 'black',
+              }}>
+              Program Studi
+            </Text>
+            <DropDownPicker
+              listMode={'SCROLLVIEW'}
+              style={styles.picker}
+              open={open}
+              value={value}
+              setOpen={setOpen}
+              textStyle={{
+                fontSize: 15,
+                opacity: 0.4,
+              }}
+              // onChangeValue={value => console.log(value)}
+              dropDownContainerStyle={{
+                borderColor: '#5665D2',
+              }}
+              placeholder="S1 - AKUNTANSI"
+              setValue={setValue}
+              items={data.map(item => ({
+                label: item.nama_prodi,
+                value: item.nama_prodi,
+              }))}
+              defaultValue={data}
+            />
+          </View>
         </View>
         <Text
           style={{
@@ -250,6 +423,115 @@ const PostKehadiran = ({navigation}) => {
           }}>
           Alamat
         </Text>
+        <View style={{flexDirection: 'row', justifyContent: 'space-evenly'}}>
+          <View style={{width: '45%'}}>
+            <DropDownPicker
+              loading={loadingProvinsi}
+              ActivityIndicatorComponent={() => (
+                <ActivityIndicator
+                  activityIndicatorSize={30}
+                  activityIndicatorColor="#5665D2"
+                />
+              )}
+              listMode={'SCROLLVIEW'}
+              style={styles.picker}
+              open={openProvinsi}
+              value={valueProvinsi}
+              onChangeValue={value => handleChangeProvinsi(value)}
+              setOpen={setOpenProvinsi}
+              textStyle={{
+                fontSize: 15,
+                opacity: 0.4,
+              }}
+              dropDownDirection="BOTTOM"
+              dropDownContainerStyle={{
+                borderColor: '#5665D2',
+              }}
+              placeholder="Provinsi"
+              setValue={setValueProvinsi}
+              items={dataProvinsi.map(item => ({
+                label: item.nama,
+                value: item.id,
+              }))}
+              defaultValue={dataProvinsi}
+            />
+          </View>
+          <View style={{width: '45%'}}>
+            <DropDownPicker
+              loading={loadingKota}
+              ActivityIndicatorComponent={() => (
+                <ActivityIndicator
+                  activityIndicatorSize={30}
+                  activityIndicatorColor="#5665D2"
+                />
+              )}
+              onChangeValue={value => console.log(value)}
+              listMode={'SCROLLVIEW'}
+              style={styles.picker}
+              open={openKota}
+              value={valueKota}
+              onChangeValue={value => handleChangeKota(value)}
+              // onChangeValue={value => console.log(value)}
+              setOpen={setOpenKota}
+              textStyle={{
+                fontSize: 15,
+                opacity: 0.4,
+              }}
+              dropDownDirection="BOTTOM"
+              dropDownContainerStyle={{
+                borderColor: '#5665D2',
+              }}
+              placeholder="Kota/Kabupaten"
+              setValue={setValueKota}
+              items={dataKota.map(item => ({
+                label: item.nama,
+                value: item.id,
+              }))}
+              defaultValue={dataKota}
+            />
+          </View>
+        </View>
+        <View style={{flexDirection: 'row', justifyContent: 'space-evenly'}}>
+          <View style={{width: '45%'}}>
+            <DropDownPicker
+              ActivityIndicatorComponent={() => (
+                <ActivityIndicator
+                  activityIndicatorSize={30}
+                  activityIndicatorColor="#5665D2"
+                />
+              )}
+              loading={loadingKecamatan}
+              listMode={'SCROLLVIEW'}
+              style={styles.picker}
+              open={openKecamatan}
+              value={valueKecamatan}
+              onChangeValue={value => handleChangeKecamatan(value)}
+              setOpen={setOpenKecamatan}
+              textStyle={{
+                fontSize: 15,
+                opacity: 0.4,
+              }}
+              dropDownDirection="BOTTOM"
+              dropDownContainerStyle={{
+                borderColor: '#5665D2',
+              }}
+              placeholder="Kecamatan"
+              setValue={setValueKecamatan}
+              items={dataKecamatan.map(item => ({
+                label: item.nama,
+                value: item.id,
+              }))}
+              defaultValue={dataKecamatan}
+            />
+          </View>
+          <View style={{width: '45%'}}>
+            <TextInput
+              placeholderTextColor="#999999"
+              placeholder={'Kode Pos'}
+              style={styles.input2}
+            />
+          </View>
+        </View>
         <TextInput
           placeholderTextColor="#999999"
           placeholder={'Alamat Lengkap'}
@@ -271,6 +553,7 @@ const PostKehadiran = ({navigation}) => {
           onChangeText={value => onChangeAlamat(value)}
           style={styles.input}
         />
+
         <Text
           style={{
             fontSize: 20,
@@ -280,6 +563,116 @@ const PostKehadiran = ({navigation}) => {
           }}>
           Alamat Orang Tua
         </Text>
+        {/* <View style={{flexDirection: 'row', justifyContent: 'space-evenly'}}>
+          <View style={{width: '45%'}}>
+            <DropDownPicker
+              loading={loadingProvinsiOrtu}
+              ActivityIndicatorComponent={() => (
+                <ActivityIndicator
+                  activityIndicatorSize={30}
+                  activityIndicatorColor="#5665D2"
+                />
+              )}
+              listMode={'SCROLLVIEW'}
+              style={styles.picker}
+              open={openProvinsiOrtu}
+              value={valueProvinsiOrtu}
+              onChangeValue={value => handleChangeProvinsi(value)}
+              setOpen={setOpenProvinsiOrtu}
+              // onChangeValue={value => console.log(value)}
+              textStyle={{
+                fontSize: 15,
+                opacity: 0.4,
+              }}
+              dropDownDirection="BOTTOM"
+              dropDownContainerStyle={{
+                borderColor: '#5665D2',
+              }}
+              placeholder="Provinsi"
+              setValue={setValueProvinsiOrtu}
+              items={dataProvinsiOrtu.map(item => ({
+                label: item.nama,
+                value: item.id,
+              }))}
+              defaultValue={dataProvinsiOrtu}
+            />
+          </View>
+          <View style={{width: '45%'}}>
+            <DropDownPicker
+              loading={loadingKotaOrtu}
+              ActivityIndicatorComponent={() => (
+                <ActivityIndicator
+                  activityIndicatorSize={30}
+                  activityIndicatorColor="#5665D2"
+                />
+              )}
+              onChangeValue={value => console.log(value)}
+              listMode={'SCROLLVIEW'}
+              style={styles.picker}
+              open={openKotaOrtu}
+              value={valueKotaOrtu}
+              onChangeValue={value => handleChangeKota(value)}
+              // onChangeValue={value => console.log(value)}
+              setOpen={setOpenKotaOrtu}
+              textStyle={{
+                fontSize: 15,
+                opacity: 0.4,
+              }}
+              dropDownDirection="BOTTOM"
+              dropDownContainerStyle={{
+                borderColor: '#5665D2',
+              }}
+              placeholder="Kota/Kabupaten"
+              setValue={setValueKotaOrtu}
+              items={dataKotaOrtu.map(item => ({
+                label: item.nama,
+                value: item.id,
+              }))}
+              defaultValue={dataKotaOrtu}
+            />
+          </View>
+        </View> */}
+        {/* <View style={{flexDirection: 'row', justifyContent: 'space-evenly'}}>
+          <View style={{width: '45%'}}>
+            <DropDownPicker
+              ActivityIndicatorComponent={() => (
+                <ActivityIndicator
+                  activityIndicatorSize={30}
+                  activityIndicatorColor="#5665D2"
+                />
+              )}
+              loading={loadingKecamatanOrtu}
+              listMode={'SCROLLVIEW'}
+              style={styles.picker}
+              open={openKecamatanOrtu}
+              value={valueKecamatanOrtu}
+              onChangeValue={value => handleChangeKecamatan(value)}
+              setOpen={setOpenKecamatanOrtu}
+              textStyle={{
+                fontSize: 15,
+                opacity: 0.4,
+              }}
+              dropDownDirection="BOTTOM"
+              dropDownContainerStyle={{
+                borderColor: '#5665D2',
+              }}
+              placeholder="Kecamatan"
+              setValue={setValueKecamatanOrtu}
+              items={dataKecamatanOrtu.map(item => ({
+                label: item.nama,
+                value: item.id,
+              }))}
+              defaultValue={dataKecamatanOrtu}
+            />
+          </View>
+          <View style={{width: '45%'}}>
+            <TextInput
+              placeholderTextColor="#999999"
+              placeholder={'Kode Pos'}
+              style={styles.input2}
+            />
+          </View>
+        </View> */}
         <TextInput
           placeholderTextColor="#999999"
           placeholder={'Alamat Lengkap'}
@@ -312,6 +705,7 @@ const styles = StyleSheet.create({
     padding: 8,
     backgroundColor: '#ffff',
   },
+
   input: {
     marginVertical: 10,
     borderRadius: 10,
@@ -321,6 +715,16 @@ const styles = StyleSheet.create({
     fontSize: 15,
     color: 'black',
     marginHorizontal: 10,
+  },
+  input2: {
+    width: '100%',
+    marginVertical: 10,
+    borderRadius: 10,
+    borderWidth: 1,
+    padding: 10,
+    borderColor: '#5665D2',
+    fontSize: 15,
+    color: 'black',
   },
   picker: {
     overlayColor: '#5665D2',

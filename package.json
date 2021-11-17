@@ -30,6 +30,7 @@
     "react-native-dropdown-picker": "^5.2.3",
     "react-native-dynamic-search-bar": "^2.0.1",
     "react-native-gesture-handler": "^1.10.3",
+    "react-native-image-picker": "^4.3.0",
     "react-native-multi-selectbox": "^1.5.0",
     "react-native-multiple-choice-picker": "^1.0.6",
     "react-native-multiple-select": "^0.5.7",

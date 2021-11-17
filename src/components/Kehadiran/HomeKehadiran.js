@@ -9,11 +9,12 @@ import {
   Text,
   TouchableOpacity,
 } from 'react-native';
+import {ActivityIndicator} from 'react-native-paper';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const HomeKehadiran = ({navigation}) => {
   const [kehadiran, setKehadiran] = useState([]);
-
+  const [isLoading, setIsLoading] = useState(true);
   const scrollA = useRef(new Animated.Value(0)).current;
 
   const getKehadiranMahasiswa = () => {
@@ -25,7 +26,8 @@ const HomeKehadiran = ({navigation}) => {
       })
       .catch(error => {
         console.log(error);
-      });
+      })
+      .finally(() => setIsLoading(false));
   };
 
   useEffect(() => {
@@ -69,70 +71,74 @@ const HomeKehadiran = ({navigation}) => {
               underlineColorAndroid="transparent"
             />
           </View>
-          <View style={{marginVertical: 10}}>
-            {kehadiran.map((item, i) => (
-              <TouchableOpacity key={i} style={styles.list}>
-                <View>
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      justifyContent: 'space-between',
-                    }}>
-                    <Text
+          {isLoading ? (
+            <ActivityIndicator marginTop={20} color={'#31539A'} />
+          ) : (
+            <View style={{marginVertical: 10}}>
+              {kehadiran.map((item, i) => (
+                <TouchableOpacity key={i} style={styles.list}>
+                  <View>
+                    <View
                       style={{
-                        fontFamily: 'SourceSansPro-Regular',
-                        color: '#f3f3f3',
-                        fontWeight: 'bold',
-                        fontSize: 20,
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
                       }}>
-                      {item.nama}
-                    </Text>
-                    <View>
                       <Text
                         style={{
                           fontFamily: 'SourceSansPro-Regular',
                           color: '#f3f3f3',
+                          fontWeight: 'bold',
                           fontSize: 20,
                         }}>
-                        {item.nim}
+                        {item.nama}
                       </Text>
+                      <View>
+                        <Text
+                          style={{
+                            fontFamily: 'SourceSansPro-Regular',
+                            color: '#f3f3f3',
+                            fontSize: 20,
+                          }}>
+                          {item.nim}
+                        </Text>
+                      </View>
                     </View>
-                  </View>
-                  {item.id_kelas.map((v, i) => (
-                    <Text
-                      key={i}
-                      style={{
-                        color: '#f3f3f3',
-                        fontSize: 20,
-                        fontFamily: 'SourceSansPro-Regular',
-                      }}>
-                      {v.kelas}
-                    </Text>
-                  ))}
-                  {item.id_programStudi.map((v, i) => (
-                    <Text
-                      key={i}
-                      style={{
-                        color: '#f3f3f3',
-                        fontSize: 20,
-                        fontFamily: 'SourceSansPro-Regular',
-                      }}>
-                      {v.nama_prodi}
-                    </Text>
-                  ))}
+                    {item.id_kelas.map((v, i) => (
+                      <Text
+                        key={i}
+                        style={{
+                          color: '#f3f3f3',
+                          fontSize: 20,
+                          fontFamily: 'SourceSansPro-Regular',
+                        }}>
+                        {v.kelas}
+                      </Text>
+                    ))}
+                    {item.id_programStudi.map((v, i) => (
+                      <Text
+                        key={i}
+                        style={{
+                          color: '#f3f3f3',
+                          fontSize: 20,
+                          fontFamily: 'SourceSansPro-Regular',
+                        }}>
+                        {v.nama_prodi}
+                      </Text>
+                    ))}
 
-                  <Text
-                    style={{
-                      color: '#f3f3f3',
-                      fontSize: 20,
-                      fontFamily: 'SourceSansPro-Regular',
-                    }}>
-                    {item.email}
-                  </Text>
-                </View>
-              </TouchableOpacity>
-            ))}
-          </View>
+                    <Text
+                      style={{
+                        color: '#f3f3f3',
+                        fontSize: 20,
+                        fontFamily: 'SourceSansPro-Regular',
+                      }}>
+                      {item.email}
+                    </Text>
+                  </View>
+                </TouchableOpacity>
+              ))}
+            </View>
+          )}
         </View>
       </Animated.ScrollView>
     </SafeAreaView>

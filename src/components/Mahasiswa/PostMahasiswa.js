@@ -14,7 +14,7 @@ import DropDownPicker from 'react-native-dropdown-picker';
 import ImagePicker from 'react-native-image-picker';
 import DataMahasiswa from '../../assets/DataMahasiswa.jpg';
 
-const PostKehadiran = ({navigation}) => {
+const PostMahasiswa = ({navigation}) => {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
   const [data, setData] = useState([]);
@@ -62,128 +62,135 @@ const PostKehadiran = ({navigation}) => {
   });
 
   const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
-  const apiProvinsi = () => {
+  useEffect(() => {
+    const apiProvinsi = async () => {
+      const apiURL = 'https://ibnux.github.io/data-indonesia/propinsi.json';
+
+      await fetch(apiURL)
+        .then(res => res.json())
+        .then(resJson => {
+          setDataProvinsi(resJson);
+        })
+        .catch(error => {
+          console.log('Error1 : ', error);
+        });
+    };
+    const timer = setTimeout(() => {
+      apiProvinsi();
+    }, 5000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  const apiProvinsiOrtu = () => {
     const apiURL = 'https://ibnux.github.io/data-indonesia/propinsi.json';
 
     fetch(apiURL)
-      .then(res => res.text())
+      .then(res => res.json())
       .then(resJson => {
-        setDataProvinsi(resJson);
-        // setDataProvinsiOrtu(resJson);
+        setDataProvinsiOrtu(resJson);
       })
       .catch(error => {
-        console.log('Error1 : ', error);
+        console.log('Error 2: ', error);
       });
   };
-  // const apiProvinsiOrtu = () => {
-  //   const apiURL = 'https://ibnux.github.io/data-indonesia/propinsi.json';
-
-  //   fetch(apiURL)
-  //     .then(res => res.json())
-  //     .then(resJson => {
-  //       setDataProvinsiOrtu(resJson);
-  //     })
-  //     .catch(error => {
-  //       console.log('Error 2: ', error);
-  //     });
-  // };
 
   const handleChangeProvinsi = value => {
     setLoadingProvinsi(true);
-    // setLoadingProvinsiOrtu(true);
+
     const apiURL = `https://ibnux.github.io/data-indonesia/kabupaten/${value}.json`;
     setValueProvinsi(value);
-    // setValueProvinsiOrtu(value);
+
     // console.log(apiURL);
     fetch(apiURL)
-      .then(res => res.text())
+      .then(res => res.json())
       .then(resJson => {
         setDataKota(resJson);
-        // setDataKotaOrtu(resJson);
       })
       .catch(error => {
         console.log('Error3 : ', error);
+      })
+      .finally(() => setIsLoading(false));
+  };
+  const handleChangeProvinsiOrtu = value => {
+    setLoadingProvinsiOrtu(true);
+    const apiURL = `https://ibnux.github.io/data-indonesia/kabupaten/${value}.json`;
+    setValueProvinsiOrtu(value);
+    // console.log(apiURL);
+    fetch(apiURL)
+      .then(res => res.json())
+      .then(resJson => {
+        setDataKotaOrtu(resJson);
+      })
+      .catch(error => {
+        console.log('Error4 : ', error);
       });
   };
-  // const handleChangeProvinsiOrtu = value => {
-  //   setLoadingProvinsiOrtu(true);
-  //   const apiURL = `https://ibnux.github.io/data-indonesia/kabupaten/${value}.json`;
-  //   setValueProvinsiOrtu(value);
-  //   // console.log(apiURL);
-  //   fetch(apiURL)
-  //     .then(res => res.text())
-  //     .then(resJson => {
-  //       setDataKotaOrtu(resJson);
-  //     })
-  //     .catch(error => {
-  //       console.log('Error4 : ', error);
-  //     });
-  // };
 
   const handleChangeKota = value => {
     setLoadingKota(true);
-    // setLoadingKotaOrtu(true);
+
     const apiURL = `https://ibnux.github.io/data-indonesia/kecamatan/${value}.json`;
     setValueKota(value);
-    // setValueKotaOrtu(value);
+
     // console.log(apiURL);
     fetch(apiURL)
-      .then(res => res.text())
+      .then(res => res.json())
       .then(resJson => {
         setDataKecamatan(resJson);
-        // setDataKecamatanOrtu(resJson);
       })
       .catch(error => {
         console.log('Error5 : ', error);
       });
   };
-  // const handleChangeKotaOrtu = value => {
-  //   setLoadingKotaOrtu(true);
-  //   const apiURL = `https://ibnux.github.io/data-indonesia/kecamatan/${value}.json`;
-  //   setValueKotaOrtu(value);
-  //   // console.log(apiURL);
-  //   fetch(apiURL)
-  //     .then(res => res.text())
-  //     .then(resJson => {
-  //       setDataKecamatanOrtu(resJson);
-  //     })
-  //     .catch(error => {
-  //       console.log('Error6 : ', error);
-  //     });
-  // };
+  const handleChangeKotaOrtu = value => {
+    setLoadingKotaOrtu(true);
+    const apiURL = `https://ibnux.github.io/data-indonesia/kecamatan/${value}.json`;
+    setValueKotaOrtu(value);
+    // console.log(apiURL);
+    fetch(apiURL)
+      .then(res => res.json())
+      .then(resJson => {
+        setDataKecamatanOrtu(resJson);
+      })
+      .catch(error => {
+        console.log('Error6 : ', error);
+      });
+  };
 
   const handleChangeKecamatan = value => {
     setLoadingKecamatan(true);
-    // setLoadingKecamatanOrtu(true);
+
     const apiURL = `https://ibnux.github.io/data-indonesia/kelurahan/${value}.json`;
     setValueKecamatan(value);
-    // setValueKecamatanOrtu(value);
+
     // console.log(apiURL);
     fetch(apiURL)
-      .then(res => res.text())
+      .then(res => res.json())
       .then(resJson => {
         setDataKelurahan(resJson);
-        // setDataKelurahanOrtu(resJson);
       })
       .catch(error => {
         console.log('Error7 : ', error);
       });
   };
-  // const handleChangeKecamatanOrtu = value => {
-  //   setLoadingKecamatanOrtu(true);
-  //   const apiURL = `https://ibnux.github.io/data-indonesia/kelurahan/${value}.json`;
-  //   setValueKecamatanOrtu(value);
-  //   // console.log(apiURL);
-  //   fetch(apiURL)
-  //     .then(res => res.text())
-  //     .then(resJson => {
-  //       setDataKelurahanOrtu(resJson);
-  //     })
-  //     .catch(error => {
-  //       console.log('Error7 : ', error);
-  //     });
-  // };
+
+  const handleChangeKecamatanOrtu = value => {
+    setLoadingKecamatanOrtu(true);
+    const apiURL = `https://ibnux.github.io/data-indonesia/kelurahan/${value}.json`;
+    setValueKecamatanOrtu(value);
+    // console.log(apiURL);
+    fetch(apiURL)
+      .then(res => res.json())
+      .then(resJson => {
+        setDataKelurahanOrtu(resJson);
+      })
+      .catch(error => {
+        console.log('Error7 : ', error);
+      });
+  };
 
   const getProgramStudi = () => {
     const apiURL = 'https://project-fadhil-heroku.herokuapp.com/api/prodi';
@@ -208,12 +215,6 @@ const PostKehadiran = ({navigation}) => {
         console.log('Error9 : ', error);
       });
   };
-
-  useEffect(() => {
-    getProgramStudi();
-    getKelas();
-    apiProvinsi();
-  }, []);
 
   const onChangeNim = value => {
     setKehadiran({...kehadiran, nim: value});
@@ -280,6 +281,11 @@ const PostKehadiran = ({navigation}) => {
       .catch(error => console.log(error));
   };
 
+  useEffect(() => {
+    getKelas();
+    getProgramStudi();
+    apiProvinsiOrtu();
+  }, []);
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -423,7 +429,7 @@ const PostKehadiran = ({navigation}) => {
           }}>
           Alamat
         </Text>
-        <View style={{flexDirection: 'row', justifyContent: 'space-evenly'}}>
+        {/* <View style={{flexDirection: 'row', justifyContent: 'space-evenly'}}>
           <View style={{width: '45%'}}>
             <DropDownPicker
               loading={loadingProvinsi}
@@ -453,10 +459,9 @@ const PostKehadiran = ({navigation}) => {
                 label: item.nama,
                 value: item.id,
               }))}
-              defaultValue={dataProvinsi}
             />
-          </View>
-          <View style={{width: '45%'}}>
+          </View> */}
+        {/* <View style={{width: '45%'}}>
             <DropDownPicker
               loading={loadingKota}
               ActivityIndicatorComponent={() => (
@@ -530,8 +535,8 @@ const PostKehadiran = ({navigation}) => {
               placeholder={'Kode Pos'}
               style={styles.input2}
             />
-          </View>
-        </View>
+          </View> */}
+        {/* </View> */}
         <TextInput
           placeholderTextColor="#999999"
           placeholder={'Alamat Lengkap'}
@@ -556,7 +561,7 @@ const PostKehadiran = ({navigation}) => {
 
         <Text
           style={{
-            fontSize: 20,
+            fonztSize: 20,
             fontWeight: 'bold',
             marginHorizontal: 10,
             color: 'black',
@@ -577,7 +582,7 @@ const PostKehadiran = ({navigation}) => {
               style={styles.picker}
               open={openProvinsiOrtu}
               value={valueProvinsiOrtu}
-              onChangeValue={value => handleChangeProvinsi(value)}
+              onChangeValue={value => handleChangeProvinsiOrtu(value)}
               setOpen={setOpenProvinsiOrtu}
               // onChangeValue={value => console.log(value)}
               textStyle={{
@@ -606,12 +611,11 @@ const PostKehadiran = ({navigation}) => {
                   activityIndicatorColor="#5665D2"
                 />
               )}
-              onChangeValue={value => console.log(value)}
               listMode={'SCROLLVIEW'}
               style={styles.picker}
               open={openKotaOrtu}
               value={valueKotaOrtu}
-              onChangeValue={value => handleChangeKota(value)}
+              onChangeValue={value => handleChangeKotaOrtu(value)}
               // onChangeValue={value => console.log(value)}
               setOpen={setOpenKotaOrtu}
               textStyle={{
@@ -631,22 +635,22 @@ const PostKehadiran = ({navigation}) => {
               defaultValue={dataKotaOrtu}
             />
           </View>
-        </View> */}
-        {/* <View style={{flexDirection: 'row', justifyContent: 'space-evenly'}}>
+        </View>
+        <View style={{flexDirection: 'row', justifyContent: 'space-evenly'}}>
           <View style={{width: '45%'}}>
             <DropDownPicker
               ActivityIndicatorComponent={() => (
                 <ActivityIndicator
                   activityIndicatorSize={30}
                   activityIndicatorColor="#5665D2"
-                />
-              )}
+                /> */}
+        {/* )}
               loading={loadingKecamatanOrtu}
               listMode={'SCROLLVIEW'}
               style={styles.picker}
               open={openKecamatanOrtu}
               value={valueKecamatanOrtu}
-              onChangeValue={value => handleChangeKecamatan(value)}
+              onChangeValue={value => handleChangeKecamatanOrtu(value)}
               setOpen={setOpenKecamatanOrtu}
               textStyle={{
                 fontSize: 15,
@@ -664,8 +668,8 @@ const PostKehadiran = ({navigation}) => {
               }))}
               defaultValue={dataKecamatanOrtu}
             />
-          </View>
-          <View style={{width: '45%'}}>
+          </View> */}
+        {/* <View style={{width: '45%'}}>
             <TextInput
               placeholderTextColor="#999999"
               placeholder={'Kode Pos'}
@@ -742,4 +746,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default PostKehadiran;
+export default PostMahasiswa;

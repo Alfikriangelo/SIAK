@@ -18,8 +18,9 @@ import GetProdi from './components/DataMaster/Prodi/GetProdi';
 import PostProdi from './components/DataMaster/Prodi/PostProdi';
 import DetailProdi from './components/DataMaster/Prodi/DetailProdi';
 import DetailKelas from './components/DataMaster/Kelas/DetailKelas';
-import HomeKehadiran from './components/Kehadiran/HomeKehadiran';
-import PostKehadiran from './components/Kehadiran/PostKehadiran';
+import HomeMahasiswa from './components/Mahasiswa/HomeMahasiswa';
+import PostMahasiswa from './components/Mahasiswa/PostMahasiswa';
+import DetailMahasiswa from './components/Mahasiswa/DetailMahasiswa';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -312,7 +313,7 @@ function DataMahasiswaScreen() {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="Home Kehadiran"
+        name="Home Mahasiswa"
         options={({navigation}) => ({
           title: 'Data Mahasiswa',
           headerTitleAlign: 'center',
@@ -325,14 +326,14 @@ function DataMahasiswaScreen() {
               size={40}
               color="#5665D2"
               style={{marginRight: 15}}
-              onPress={() => navigation.navigate('Post Kehadiran')}
+              onPress={() => navigation.navigate('Post Mahasiswa')}
             />
           ),
         })}
-        component={HomeKehadiran}
+        component={HomeMahasiswa}
       />
       <Stack.Screen
-        name="Post Kehadiran"
+        name="Post Mahasiswa"
         options={({navigation}) => ({
           title: 'Tambah',
           headerTitleStyle: {fontSize: 20},
@@ -346,7 +347,23 @@ function DataMahasiswaScreen() {
             />
           ),
         })}
-        component={PostKehadiran}
+        component={PostMahasiswa}
+      />
+      <Stack.Screen
+        name="Detail Mahasiswa"
+        options={({navigation}) => ({
+          title: 'Rincian',
+          headerLeft: () => (
+            <Ionicons
+              name={'chevron-back-outline'}
+              size={40}
+              color="#5665D2"
+              onPress={() => navigation.goBack()}
+              style={{marginLeft: 10}}
+            />
+          ),
+        })}
+        component={DetailMahasiswa}
       />
     </Stack.Navigator>
   );

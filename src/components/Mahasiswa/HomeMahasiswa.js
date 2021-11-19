@@ -6,15 +6,17 @@ import {
   SafeAreaView,
   Animated,
   TextInput,
+  Image,
   Text,
   TouchableOpacity,
 } from 'react-native';
 import {ActivityIndicator} from 'react-native-paper';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-const HomeKehadiran = ({navigation}) => {
+const HomeMahasiswa = ({navigation}) => {
   const [kehadiran, setKehadiran] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [photo, setPhoto] = useState([]);
   const scrollA = useRef(new Animated.Value(0)).current;
 
   const getKehadiranMahasiswa = () => {
@@ -30,6 +32,20 @@ const HomeKehadiran = ({navigation}) => {
       .finally(() => setIsLoading(false));
   };
 
+  const fetchImage = () => {
+    const apiURL =
+      'https://project-fadhil-heroku.herokuapp.com/app/uploads/gambar/';
+
+    fetch(apiURL)
+      .then(res => res.json())
+      .then(resJson => {
+        setPhoto(resJson);
+      });
+  };
+
+  useEffect(() => {
+    fetchImage();
+  }, []);
   useEffect(() => {
     const unSubscribe = navigation.addListener('focus', () => {
       getKehadiranMahasiswa();
@@ -76,12 +92,26 @@ const HomeKehadiran = ({navigation}) => {
           ) : (
             <View style={{marginVertical: 10}}>
               {kehadiran.map((item, i) => (
-                <TouchableOpacity key={i} style={styles.list}>
+                <TouchableOpacity
+                  key={i}
+                  style={styles.list}
+                  onPress={() =>
+                    navigation.navigate('Detail Mahasiswa', {
+                      item: item,
+                    })
+                  }>
+                  <Image
+                    source={{
+                      uri: `https://project-fadhil-heroku.herokuapp.com/app/uploads/gambar/${item.foto}`,
+                    }}
+                    style={{width: '100%', height: 170, borderRadius: 20}}
+                  />
                   <View>
                     <View
                       style={{
                         flexDirection: 'row',
                         justifyContent: 'space-between',
+                        marginTop: 10,
                       }}>
                       <Text
                         style={{
@@ -198,4 +228,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default HomeKehadiran;
+export default HomeMahasiswa;

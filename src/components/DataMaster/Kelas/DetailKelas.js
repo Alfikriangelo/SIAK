@@ -60,7 +60,7 @@ const DetailKelas = ({route, navigation}) => {
     const matkul = data.filter(item => newValue.includes(item.matkul));
     var myHeaders = new Headers();
     myHeaders.append('Content-Type', 'application/json');
-    fetch(`https://project-fadhil-heroku.herokuapp.com/api/kelas/${item._id}`, {
+    fetch('https://project-fadhil-heroku.herokuapp.com/api/kelas/' + item._id, {
       method: 'PUT',
       headers: myHeaders,
       body: JSON.stringify({
